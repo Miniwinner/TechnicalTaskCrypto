@@ -23,7 +23,7 @@ final class SearchViewController: UIViewController {
         setupSearchBar()
         setupUI()
         setupLayout()
-        vm.loadData(limitPlus: 1000)
+        vm.loadData(limitPlus: vm.limit)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -79,7 +79,7 @@ final class SearchViewController: UIViewController {
         searchController.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Write symbol...", attributes: attributes)
         searchController.searchBar.backgroundColor = .clear
         searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.showsCancelButton = true
+        searchController.searchBar.showsCancelButton = false
         searchController.searchBar.clearsContextBeforeDrawing = true
         searchController.searchBar.searchTextField.layer.borderColor = UIColor.gray.cgColor
         searchController.searchBar.searchTextField.layer.borderWidth = 0.5

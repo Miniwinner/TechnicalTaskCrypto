@@ -49,32 +49,37 @@ final class DetailedViewController: UIViewController {
         view.addSubview(price)
         view.addSubview(deltaPrice)
         view.addSubview(stackData)
+        navigationItem.titleView?.backgroundColor = .clear
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.barStyle = UIBarStyle.default
+        navigationController?.navigationBar.tintColor = UIColor.white
     }
     private func setupLayout() {
         backView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         header.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(60)
+            make.top.equalToSuperview().offset(55)
             make.left.equalToSuperview().offset(100)
             make.height.equalTo(30)
             make.width.lessThanOrEqualTo(200)
         }
         price.snp.makeConstraints { make in
-            make.left.equalTo(30)
+            make.left.equalTo(20)
             make.top.equalTo(header.snp.bottom).offset(50)
             make.height.equalTo(26)
             make.width.lessThanOrEqualTo(200)
         }
         deltaPrice.snp.makeConstraints { make in
-            make.bottom.equalTo(price)
+            make.centerY.equalTo(price)
             make.left.equalTo(price.snp.right).offset(20)
             make.width.lessThanOrEqualTo(200)
             make.height.equalTo(20)
         }
         stackData.snp.makeConstraints { make in
             make.top.equalTo(price.snp.bottom).offset(20)
-            make.left.right.equalToSuperview().inset(15)
+            make.left.equalToSuperview().offset(20)
+            make.right.equalToSuperview()
             make.height.equalTo(36)
         }
     }

@@ -12,8 +12,12 @@ final class HomeViewController: UIViewController {
     private let vm = CryptoViewModel()
     lazy var mainHeader = CryptoLabel(style: .headerMain, text: "Trending Coins")
     lazy var backView = CryptoImageView(style: .backView)
-    private let searchButton = CryptoButton(style: .search)
+    
+    lazy var searchButton = CryptoButton(style: .search)
+    lazy var cancelButton = CryptoButton(style: .cancel)
     private var refreshControl = UIRefreshControl()
+    
+    private var searchBar = UISearchBar()
     
     lazy var cryptoCollection: UITableView = {
         let collection = UITableView()
@@ -24,6 +28,7 @@ final class HomeViewController: UIViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupSearchBar()
         setupUI()
         setupLayout()
         reload()
@@ -37,8 +42,31 @@ final class HomeViewController: UIViewController {
         }
     }
     @objc private func showSearch() {
-       let vc = SearchViewController()
-        navigationController?.pushViewController(vc, animated: true)
+//        let vc = SearchViewController()
+//        navigationController?.pushViewController(vc, animated: true)
+        UIView.animate(withDuration: 0.6) { [self] in
+            mainHeader.isHidden = true
+            searchButton.isHidden = true
+           
+            searchBar.isHidden = false
+            searchBar.becomeFirstResponder()
+            cancelButton.isHidden = false
+            cryptoCollection.reloadData()
+        }
+        self.view.layoutIfNeeded()
+    }
+    @objc private func hideSearch() {
+        UIView.animate(withDuration: 0.6) { [self] in
+            mainHeader.isHidden = false
+            searchButton.isHidden = false
+           
+            searchBar.isHidden = true
+            searchBar.searchTextField.text = nil
+            cancelButton.isHidden = true
+            cryptoCollection.reloadData()
+        }
+        self.view.layoutIfNeeded()
+
     }
     @objc private func refreshTable(_ sender: AnyObject) {
         vm.loadData(limitPlus: vm.limit)
@@ -57,10 +85,16 @@ final class HomeViewController: UIViewController {
         view.addSubview(backView)
         searchButton.addTarget(self, action: #selector(showSearch), for: .touchUpInside)
         view.addSubview(searchButton)
+        cancelButton.addTarget(self, action: #selector(hideSearch), for: .touchUpInside)
+        view.addSubview(cancelButton)
         view.bringSubviewToFront(searchButton)
-
+        
+        searchBar.isHidden = true
+        searchBar.delegate = self
+        view.addSubview(searchBar)
+        
         refreshControl.addTarget(self, action: #selector(refreshTable), for: .valueChanged)
-
+        
         view.backgroundColor = .black
         view.addSubview(mainHeader)
         cryptoCollection.register(CryptoCell.self, forCellReuseIdentifier: "crypto")
@@ -90,15 +124,64 @@ final class HomeViewController: UIViewController {
             make.right.equalToSuperview().inset(10)
             make.height.width.equalTo(40)
         }
+        searchBar.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(80)
+            make.left.equalToSuperview().offset(20)
+            make.width.lessThanOrEqualTo(285)
+            make.height.equalTo(40)
+        }
+        searchBar.searchTextField.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        cancelButton.snp.makeConstraints { make in
+            make.left.equalTo(searchBar.snp.right).offset(10)
+            make.top.equalToSuperview().offset(80)
+            make.height.equalTo(40)
+            make.right.equalToSuperview().inset(20)
+            make.width.lessThanOrEqualTo(70)
+        }
+    }
+    private func setupSearchBar() {
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.gray,
+            .font: UIFont.systemFont(ofSize: 15, weight: .regular) as Any
+        ]
+        searchBar.searchBarStyle = .default
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.searchTextField.layer.cornerRadius = 12
+        searchBar.searchTextField.layer.masksToBounds = true
+        searchBar.searchTextField.backgroundColor = .black
+        searchBar.searchTextField.borderStyle = .none
+        searchBar.searchTextField.tintColor = .white
+        searchBar.searchTextField.textColor = .white
+        searchBar.tintColor = .white
+        searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Write symbol...", attributes: attributes)
+        searchBar.backgroundColor = .clear
+        searchBar.showsCancelButton = false
+        searchBar.clearsContextBeforeDrawing = true
+        searchBar.searchTextField.layer.borderColor = UIColor.gray.cgColor
+        searchBar.searchTextField.layer.borderWidth = 0.5
+    }
+}
+extension HomeViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard let searchText = searchBar.text else { return }
+        print("!")
+        vm.filterText(text: searchText)
+        DispatchQueue.main.async {
+            self.cryptoCollection.reloadData()
+        }
     }
 }
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return vm.cryptoCount()
+        return searchBar.isHidden ? vm.cryptoCount() : vm.filterCount()
+        
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = cryptoCollection.dequeueReusableCell(withIdentifier: "crypto", for: indexPath) as? CryptoCell else { fatalError("Error crypto view") }
-        cell.setupData(model: vm.cryptoIndex(index: indexPath.row))
+        if searchBar.isHidden  { cell.setupData(model: vm.cryptoIndex(index: indexPath.row))
+        } else { cell.setupData(model: vm.filterIndex(index: indexPath.row)) }
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

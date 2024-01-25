@@ -14,7 +14,7 @@ class CryptoStackView: UIStackView {
     func createLabel(text: String) -> UILabel {
         let label = UILabel()
         label.text = text
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.backgroundColor = .clear
         return label
     }

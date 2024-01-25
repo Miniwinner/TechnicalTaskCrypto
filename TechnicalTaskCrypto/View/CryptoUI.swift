@@ -26,6 +26,15 @@ class CryptoLabel: UILabel {
             textColor = .white
             backgroundColor = .clear
             font = UIFont.systemFont(ofSize: 24, weight: .regular)
+            let labelText = "Trending Coins"
+            let attributedString = NSMutableAttributedString(string: labelText)
+            let kernValue: CGFloat = 0.48
+            let range = NSRange(location: 0, length: labelText.count)
+
+            attributedString.addAttribute(NSAttributedString.Key.kern, value: kernValue, range: range)
+
+            attributedText = attributedString
+            
         case .cryptoName:
             textColor = .white
             font = UIFont.systemFont(ofSize: 18, weight: .regular)
@@ -73,6 +82,7 @@ class CryptoImageView: UIImageView {
 class CryptoButton: UIButton {
     enum Style {
         case search
+        case cancel
     }
     
     init(style: Style) {
@@ -87,6 +97,13 @@ class CryptoButton: UIButton {
             setImage(UIImage(named: "search"), for: .normal)
             imageView?.contentMode = .scaleToFill
             backgroundColor = UIColor(red: 35/255, green: 30/255, blue: 28/255, alpha: 1)
+        case .cancel:
+            setTitle("Cancel", for: .normal)
+            titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+            titleLabel?.textColor = .gray
+            isHidden = true
+            
+            
         }
     }
     
