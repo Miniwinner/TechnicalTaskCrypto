@@ -107,9 +107,9 @@ final class HomeViewController: UIViewController {
     private func setupLayout() {
         mainHeader.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(80)
-            make.left.equalToSuperview().offset(16)
+            make.left.equalToSuperview().offset(25)
             make.height.equalTo(28)
-            make.width.equalTo(213)
+            make.width.lessThanOrEqualTo(213)
         }
         cryptoCollection.snp.makeConstraints { make in
             make.top.equalTo(mainHeader.snp.bottom).offset(15)
@@ -166,7 +166,6 @@ final class HomeViewController: UIViewController {
 extension HomeViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let searchText = searchBar.text else { return }
-        print("!")
         vm.filterText(text: searchText)
         DispatchQueue.main.async {
             self.cryptoCollection.reloadData()

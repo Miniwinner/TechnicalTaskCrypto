@@ -27,12 +27,7 @@ class CryptoLabel: UILabel {
             backgroundColor = .clear
             font = UIFont.systemFont(ofSize: 24, weight: .regular)
             let labelText = "Trending Coins"
-            let attributedString = NSMutableAttributedString(string: labelText)
-            let kernValue: CGFloat = 0.48
-            let range = NSRange(location: 0, length: labelText.count)
-
-            attributedString.addAttribute(NSAttributedString.Key.kern, value: kernValue, range: range)
-
+            let attributedString = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.kern: 0.48])
             attributedText = attributedString
             
         case .cryptoName:

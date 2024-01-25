@@ -23,6 +23,8 @@
 		415B440F2B610BEA00078DD5 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415B440E2B610BE900078DD5 /* SearchViewController.swift */; };
 		415B44112B614C5600078DD5 /* StackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 415B44102B614C5600078DD5 /* StackView.swift */; };
 		4198A2322B619D6E001118FE /* CryptoProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4198A2312B619D6E001118FE /* CryptoProtocol.swift */; };
+		4198A2362B6238E7001118FE /* SFProDisplay-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4198A2352B6238E7001118FE /* SFProDisplay-Regular.ttf */; };
+		4198A2382B6238F2001118FE /* SFProDisplay-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4198A2372B6238F2001118FE /* SFProDisplay-Semibold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,8 @@
 		415B440E2B610BE900078DD5 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		415B44102B614C5600078DD5 /* StackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackView.swift; sourceTree = "<group>"; };
 		4198A2312B619D6E001118FE /* CryptoProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoProtocol.swift; sourceTree = "<group>"; };
+		4198A2352B6238E7001118FE /* SFProDisplay-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SFProDisplay-Regular.ttf"; path = "../../../../Downloads/SFProDisplay-Regular.ttf"; sourceTree = "<group>"; };
+		4198A2372B6238F2001118FE /* SFProDisplay-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SFProDisplay-Semibold.ttf"; path = "../../../../Downloads/SFProDisplay-Semibold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +80,7 @@
 		415B43E02B5FF47000078DD5 /* TechnicalTaskCrypto */ = {
 			isa = PBXGroup;
 			children = (
+				4198A2342B6238BB001118FE /* Fonts */,
 				415B44092B5FFE0500078DD5 /* Service */,
 				415B44082B5FFDEC00078DD5 /* Assets */,
 				415B44072B5FFDE100078DD5 /* Model */,
@@ -168,6 +173,15 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
+		4198A2342B6238BB001118FE /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				4198A2352B6238E7001118FE /* SFProDisplay-Regular.ttf */,
+				4198A2372B6238F2001118FE /* SFProDisplay-Semibold.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -232,7 +246,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4198A2382B6238F2001118FE /* SFProDisplay-Semibold.ttf in Resources */,
 				415B43EE2B5FF47900078DD5 /* LaunchScreen.storyboard in Resources */,
+				4198A2362B6238E7001118FE /* SFProDisplay-Regular.ttf in Resources */,
 				415B43EB2B5FF47900078DD5 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
